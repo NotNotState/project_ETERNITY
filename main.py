@@ -4,8 +4,12 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
+# DataModel inherits BaseModel
 class DataModel(BaseModel):
+    # re-name to data_mad_std
     data: list[float]
+    data_str : str
+    data_float: float
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="./static"), name="static")
@@ -17,6 +21,7 @@ def root():
     #return FileResponse(os.path.join("static", "index.html"))
     return FileResponse("static/index.html")
 
+ 
 @app.post("/calculate_standard_deviation")
 def calc_std(request: DataModel):
 
@@ -26,6 +31,14 @@ def calc_std(request: DataModel):
     res = standard_deviation(request.data)
 
     return {"standard_deviation" : res}
+
+# @app.post("/calculate_mean_absolute_deviation")
+# @app.post("/calculate_arithmetic_expression")
+# @app.post("/calculate_arc_cosine")
+# @app.post("/calculate_exponential_growth")
+# @app.post("/calculate_logarithmic_function")
+# @app.post("/calculate_sinh")
+# @app.post("/calculate_power_function")
 
 if __name__ == "__main__":
     root()
