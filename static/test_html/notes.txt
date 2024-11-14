@@ -1,0 +1,3 @@
+- display history in reverse order; most recent on top
+- don't save/display entry when no operation done OR have operation be repeated when spamming equals btn
+- style history

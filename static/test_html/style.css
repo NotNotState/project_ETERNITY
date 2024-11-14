@@ -9,6 +9,11 @@
 }
 .history{
     background-color: #363d41;
+    width: 30vw;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
 }
 .calculator{
     width: 100%;
