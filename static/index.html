@@ -20,9 +20,9 @@
             <select id="operation" onchange="displaySelectedOperation()">
                 <option value="arithmetic_expression">Arithmetic Expression</option>
                 <option value="standard_deviation">Standard Deviation</option>
-                <option value="arc_cosine">arccos Function</option>
+                <option value="arccos">arccos Function</option>
                 <option value="exponential_growth">Exponential Growth (Decay) Function</option>
-                <option value="logarithmic_function">Logarithmic Function</option>
+                <option value="log_function">Logarithmic Function</option>
                 <option value="mean_absolute_deviation">Mean Absolute Deviation (MAD)</option>
                 <option value="power_function">Power Function</option>
                 <option value="gamma_function">Gamma Function</option>
@@ -50,13 +50,13 @@
                 case "standard_deviation":
                     latexString = "\\( \\sigma \\)";
                     break;
-                case "arc_cosine":
+                case "arccos":
                     latexString = "\\( \\arccos(x) \\)";
                     break;
                 case "exponential_growth":
                     latexString = "\\( a \\cdot b^{x} \\)";
                     break;
-                case "logarithmic_function":
+                case "log_function":
                     latexString = "\\( \\log_{b}(x) \\)";
                     break;
                 case "power_function":
