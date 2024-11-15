@@ -62,6 +62,6 @@ def arccos_taylor(number: float) -> float:
 
 if __name__ == '__main__':
     print_hi('PyCharm')
-    x = -1  # Example input in the range [-1, 1]
+    x = 1  # Example input in the range [-1, 1]
     result = arccos_taylor(x)
     print("arccos(", x, ") =", result)

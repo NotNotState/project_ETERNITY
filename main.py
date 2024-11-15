@@ -1,4 +1,5 @@
 from functions.standard_deviation import standard_deviation
+from functions.arccos import arccos_taylor
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -27,7 +28,7 @@ def process_calc_request(request : DataModel) -> dict:
         standard_deviation = standard_deviation,
         mean_absolute_deviation = lambda x : x,
         gamma_function = lambda x : x,
-        arccos = lambda x : x,
+        arccos = arccos_taylor(),
         power_function = lambda x : x,
         log_function = lambda x : x,
         exponential_growth = lambda x : x,
@@ -44,3 +45,7 @@ def process_calc_request(request : DataModel) -> dict:
 
 if __name__ == "__main__":
     root()
+
+    x = -1  # Example input in the range [-1, 1]
+    result = arccos_taylor(x)
+    print("arccos(", x, ") =", result)
