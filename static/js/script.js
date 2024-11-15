@@ -1,145 +1,86 @@
-//Re-name for each function
 //Include general user-input validator
+import Validators from './mathOperators.js';
 
-function validateUserInput(input, spec) {
-    //process
-    //1) check spec == valid operation
-    //2) if not valid => HANDLE ERROR (like document.getElementById("result").textContent = "Please enter valid numbers separated by commas.";)
-    //3) if ok then 
-        // 1) process data based on spec
-        // 2) return package wrt processor function
-    let data;
+document.getElementById("submitButton").addEventListener("click", submitCalculation);
 
-    switch(spec) {
+function validatorFactory(operation, userInput) {
+    let calcObj;
+    switch(operation) {
         case "standard_deviation":
         case "mean_absolute_deviation":
-            data = input
-                .split(",")
-                .map(item => item.trim()) // Trim extra whitespace
-                .filter(item => item !== "")
-                .map(Number)
-                .filter(value => !isNaN(value)); 
+            calcObj = new Validators.StatisticValidator(operation, userInput);
             break;
-        case "arc_cosine":
-            data = 0
-            break;
-        case "exponential_growth":
-            data = 0
-            break;
-        case "logarithmic_function":
-            data = 0
-            break;
-        case "sinh":
-            data = 0
+        case "gamma_function":
+        case "arccos":
+            calcObj = new Validators.SingleParamFloatValidator(operation, userInput);
             break;
         case "power_function":
-            data = 0
+        case "log_function":
+            calcObj = new Validators.DoubleParamFloatValidator(operation, userInput);
+            break;
+        case "exponential_growth"://takes 3 args!
+            calcObj = new Validators.ThreeParamFloatValidator(operation, userInput);
+            break;
+        case "arithmetic_expression":
+            calcObj = new Validators.ArithmeticExpressionValidator(operation, userInput);
             break;
         default:
-            data = NaN
-        }
-
-    if (spec == "mean_absolute_deviation" || spec == "standard_deviation"){
-        data = input
-            .split(",")
-            .map(item => item.trim()) // Trim extra whitespace
-            .filter(item => item !== "")
-            .map(Number)
-            .filter(value => !isNaN(value)); 
+            throw new Error(`Object Assignment Failed for "${operation}" with "${userInput}"`);
     }
-    
-    //Will return NaN if input doesn't match or failure in conversion ocurred
-    return data;    
+
+    return calcObj;
 }
 
-async function submitCalculationV2() {
-    const operation = document.getElementById("operation").value;
-    const dataInput = document.getElementById("data").value;
-
-    if (isNaN(dataInput)) {
-        document.getElementById("result").textContent = "Please enter valid numbers separated by commas.";
-        console.log(dataInput)
-        return;
+function getCalculationPackage(calculationObject){
+    return {
+        data_operation : calculationObject.getOperation(),
+        data : calculationObject.getData()
     }
-
-    data = validateUserInput(dataInput, operation);
-
-    // Send request to FastAPI based on the selected operation
-    // need to move this above the data validation
-    let url = "";
-    let requestData = {};
-    
-    //Will add customization for different functions and different inputs
-    if (operation === "standard_deviation") {
-        url = "/calculate_standard_deviation";
-        requestData = { data };
-    }
-
-    validateUserInput()
-
-    if ((data.some(isNaN)) || (data.length == 0)) {
-        //adjust this to not be std specific
-        document.getElementById("result").textContent = "Please enter valid numbers separated by commas.";
-        return;
-    }
-    
 }
 
 async function submitCalculation() {
     const operation = document.getElementById("operation").value;
-    const dataInput = document.getElementById("data").value; // Reads Array object
+    const dataInput = document.getElementById("data").value;
 
-    if (isNaN(dataInput)) {
-        document.getElementById("result").textContent = "Please enter valid numbers separated by commas.";
-        console.log(dataInput)
+    if (dataInput == "") {
+        document.getElementById("result").textContent = "Please enter some data.";
+        console.log(dataInput);
         return;
-    }
+    }   
 
-    console.log(typeof dataInput);
-    
-    // Parse the comma-separated input into an array of numbers
-    //const data = dataInput.split(",").map(Number);
-    const data = dataInput
-        .split(",")
-        .map(item => item.trim()) // Trim extra whitespace
-        .filter(item => item !== "")
-        .map(Number)
-        .filter(value => !isNaN(value));          // Convert to number
+    const calcObj = validatorFactory(operation, dataInput); //Raise Error if function not present
 
-    // Make sure the data is a valid array of numbers
-    if ((data.some(isNaN)) || (data.length == 0)) {
-        document.getElementById("result").textContent = "Please enter valid numbers separated by commas.";
+    // console.log(calcObj.getData());
+    // console.log(typeof calcObj.getData());
+    // console.log(calcObj.getOperation());
+    // console.log(calcObj.isInputValid());
+
+    const url = "/calculate_call";
+    let calcPackage = {};
+
+    if (calcObj.isInputValid()){
+        calcPackage = getCalculationPackage(calcObj);
+    }else{
+        console.log("ERROR NOT VALID");
+        document.getElementById("result").textContent = "The data you entered was not in the right format!";
         return;
-    }
-
-    // Send request to FastAPI based on the selected operation
-    // need to move this above the data validation
-    let url = "";
-    let requestData = {};
-
-
-    //Will add customization for different functions and different inputs
-    if (operation === "standard_deviation") {
-        url = "/calculate_standard_deviation";
-        requestData = { data };
     }
 
     try {
-        console.log(data);
         const response = await fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(requestData),
+            body: JSON.stringify(calcPackage),
         });
 
         // Parse response and display result
         const result = await response.json();
-        document.getElementById("result").textContent = result?.standard_deviation ?? "Error";
-        //document.getElementById("result").textContent = result.standard_deviation || console.log(data);
+        document.getElementById("result").textContent = result?.calculation_result ?? "A Backend Processing Error Occured";
     } catch (error) {
         document.getElementById("result").textContent = "An error occurred.";
     }
-    
+
+
 }

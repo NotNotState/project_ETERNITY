@@ -11,45 +11,34 @@
     <title>Calculator</title>
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
-<body>
-    <h1>Eternity Calculator</h1>
+<body onload="displaySelectedOperation()">
+    <div class="container">
+        <h1>Eternity Calculator</h1>
+        
+        <div class="calculator">
+            <label for="operation">Select Operation:</label>
+            <select id="operation" onchange="displaySelectedOperation()">
+                <option value="arithmetic_expression">Arithmetic Expression</option>
+                <option value="standard_deviation">Standard Deviation</option>
+                <option value="arc_cosine">arccos Function</option>
+                <option value="exponential_growth">Exponential Growth (Decay) Function</option>
+                <option value="logarithmic_function">Logarithmic Function</option>
+                <option value="mean_absolute_deviation">Mean Absolute Deviation (MAD)</option>
+                <option value="power_function">Power Function</option>
+                <option value="gamma_function">Gamma Function</option>
+            </select>
 
-    <div>
-        <label for="operation">Select Operation:</label>
-        <!--
-        <select id="operation">
-            <option value="Arithmetic Expression">Standard Operations</option>
-            <option value="standard_deviation">Standard Deviation \( (\sigma) \)</option>
-            <option value="arc_cos">\( \arccos(x) \)</option>
-            <option value="ab^x"><p>$$ a \cdot b^{x} $$</p></option>
-            <option value="logb_x">\(\log_{b}(x)\) </option>
-            <option value="MAD">Mean Absolute Deviation (MAD)</option>
-            <option value="sinh">\( \sinh(x) \)</option>
-            <option value="x^y">\( x^{y} \)</option>
-        </select>
-        -->
+            <label for="data">Enter Data (comma-separated):</label>
+            <input type="text" id="data" placeholder="e.g., 1,2,3,4,5">
+            
+            <button id="submitButton">Calculate</button>
+            <!-- <button onclick="submitCalculationV3()">Calculate</button> -->
+            <!-- <button onclick="submitCalculationV2()">Calculate</button> -->
+        </div>
 
-        <select id="operation" onchange="displaySelectedOperation()">
-            <option value="arithmetic_expression">Standard Operations</option>
-            <option value="standard_deviation">Standard Deviation</option>
-            <option value="arc_cosine">arccos(x)</option>
-            <option value="exponential_growth">a * b^x</option>
-            <option value="logarithmic_function">log_b(x)</option>
-            <option value="mean_absolute_deviation">Mean Absolute Deviation (MAD)</option>
-            <option value="sinh">sinh(x)</option>
-            <option value="power_function">x^y</option>
-        </select>
-
-
-        <label for="data">Enter Data (comma-separated):</label>
-        <input type="text" id="data" placeholder="e.g., 1,2,3,4,5">
-
-        <button onclick="submitCalculation()">Calculate</button>
+        <span id="selectedOperation" class="operation-display"></span>
+        <p class="result-display">Result: <span id="result"></span></p>
     </div>
-    
-    
-    <span id="selectedOperation"></span>
-    <p>Result: <span id="result"></span></p>
 
     <script>
         function displaySelectedOperation() {
@@ -62,29 +51,34 @@
                     latexString = "\\( \\sigma \\)";
                     break;
                 case "arc_cosine":
-                    latexString = "\( \\arccos(x) \)";
+                    latexString = "\\( \\arccos(x) \\)";
                     break;
                 case "exponential_growth":
-                    latexString = "$$ a \\cdot b^{x} $$";
+                    latexString = "\\( a \\cdot b^{x} \\)";
                     break;
                 case "logarithmic_function":
                     latexString = "\\( \\log_{b}(x) \\)";
                     break;
-                case "sinh":
-                    latexString = "\\( \\sinh(x) \\)";
-                    break;
                 case "power_function":
                     latexString = "\\( x^{y} \\)";
+                    break;
+                case "gamma_function":
+                    latexString = "\\( \\Gamma(x) \\)";
+                    break;
+                case "mean_absolute_deviation":
+                    latexString = "\\( MAD \\)";
+                    break;
+                case "arithmetic_expression":
+                    latexString = "\\( +,-,\\times, \\div \\)";
                     break;
                 default:
                     latexString = operation;
             }
 
             selectedOperation.textContent = latexString;
-            renderMathInElement(selectedOperation);  // Render the LaTeX in the selectedOperation span
+            renderMathInElement(selectedOperation);
         }
     </script>
-
-    <script src="/static/js/script.js"></script>
+    <script type="module" src="/static/js/script.js"></script>
 </body>
 </html>
