@@ -1,14 +1,4 @@
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-def exponent(base, power):
-    result = 1
-    for _ in range(power):
-        result *= base
-    return result
-
+from functions.exponent import exponent
 
 def arcsin_taylor(x, terms=1000):
     # approximation of pi
@@ -61,7 +51,6 @@ def arccos_taylor(number: float) -> float:
 
 
 if __name__ == '__main__':
-    print_hi('PyCharm')
     x = 1  # Example input in the range [-1, 1]
     result = arccos_taylor(x)
     print("arccos(", x, ") =", result)
