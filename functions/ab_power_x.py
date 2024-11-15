@@ -16,9 +16,9 @@ def ab_power_x(a, b, x):
 
 if __name__ == "__main__":
     # Example usage of the ab_power_x function
-    print(ab_power_x(2, 3, 4))   # 2 * 3^4 = 162
-    print(ab_power_x(1, 5, 2))   # 1 * 5^2 = 25
-    print(ab_power_x(0, 3, 4))   # 0 * 3^4 = 0
-    print(ab_power_x(5, 2, 0))   # 5 * 2^0 = 5
+    print(ab_power_x(2, 3, 4))     # 2 * 3^4 = 162
+    print(ab_power_x(1, 5, 2))     # 1 * 5^2 = 25
+    print(ab_power_x(0, 3, 4))     # 0 * 3^4 = 0
+    print(ab_power_x(5, 2, 0))     # 5 * 2^0 = 5
     print(ab_power_x(1.5, 3, -2))  # 1.5 * 3^(-2) = 0.166666...
     print(ab_power_x(10, 0.5, 2))  # 10 * (0.5)^2 = 2.5
