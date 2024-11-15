@@ -4,8 +4,10 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
+# Type enforcement on front end requests
 class DataModel(BaseModel):
-    data: list[float]
+    data : list[float] | str | float = None # This replaces that above
+    data_operation: str | None = None
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="./static"), name="static")
@@ -17,15 +19,28 @@ def root():
     #return FileResponse(os.path.join("static", "index.html"))
     return FileResponse("static/index.html")
 
-@app.post("/calculate_standard_deviation")
-def calc_std(request: DataModel):
-
-    if not request.data:
-        raise HTTPException(status_code=400, detail="Data list cannot be empty")
+@app.post("/calculate_call")
+def process_calc_request(request : DataModel) -> dict:
+    res = 0
     
-    res = standard_deviation(request.data)
+    func = dict(
+        standard_deviation = standard_deviation,
+        mean_absolute_deviation = lambda x : x,
+        gamma_function = lambda x : x,
+        arccos = lambda x : x,
+        power_function = lambda x : x,
+        log_function = lambda x : x,
+        exponential_growth = lambda x : x,
+        arithmetic_expression = lambda x : eval(x, {}, {}),
+    ).get(request.data_operation, None)
 
-    return {"standard_deviation" : res}
+    try:
+        res = func(request.data)
+    except:
+        raise HTTPException(status_code=400, detail="data_operation not recognized")
+    
+    return {"calculation_result" : res}
+
 
 if __name__ == "__main__":
     root()
