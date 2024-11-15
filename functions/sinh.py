@@ -1,30 +1,37 @@
 import numpy as np
-from math import factorial
-from functions.helper_functions import abs_diff
+from functions.helper_functions import exponential
 
 """
-Custom implementation of sinh(x) using its Taylor series expansion
+Calculates sinh(x) using the exponential definition: sinh(x) = (e^x - e^(-x)) / 2
 """
 
-def sinh_custom(x: float, TOL: float = 1e-8, N_max: int = 20) -> float:
+def sinh(x: float) -> float:
     """
-    Calculates sinh(x) using the Taylor series expansion:
-    sinh(x) = x + x^3/3! + x^5/5! + ...
+    Calculate sinh(x) using the exponential definition.
     """
-    result = 0.0
-    term = x  # First term in the series
-    n = 1  # Start with the first term
+    return (exponential(x) - exponential(-x)) / 2
 
-    while abs_diff(term, 0) > TOL and n <= N_max:
+
+def exponential(x: float, TOL: float = 1e-8, N_max: int = 50) -> float:
+    """
+    Approximates e^x using the Taylor series:
+    e^x = 1 + x + x^2/2! + x^3/3! + ...
+    """
+    result = 1.0  # First term in the series
+    term = 1.0  # Term starts as 1 (x^0 / 0!)
+    n = 1  # Counter for factorial in denominator
+
+    while abs(term) > TOL and n <= N_max:
+        term *= x / n  # Calculate the next term in the series
         result += term
-        n += 2
-        term *= x**2 / ((n-1) * n)  # Calculate the next term in the series
+        n += 1
 
     return result
 
 
 if __name__ == "__main__":
+    # Test values for sinh(x)
     test_values = [0, 0.5, 1, 2, 5]
     for val in test_values:
-        print(f"sinh_custom({val}) = {sinh_custom(val)}")
-        print(f"np.sinh({val}) = {np.sinh(val)}")
+        print(f"sinh({val}) = {sinh(val)}")
+        print(f"np.sinh({val}) = {np.sinh(val)}")  # Compare with numpy's sinh
