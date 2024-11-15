@@ -1,9 +1,7 @@
 from functions.exponent import exponent
 
 def ab_power_x(a, b, x):
-    """
-    Calculate the value of ab^x using the imported exponent function.
-    """
+    """Calculate the value of ab^x using the imported exponent function"""
     if b <= 0:
         raise ValueError("Base 'b' must be greater than 0 for exponential calculations.")
     
@@ -13,9 +11,7 @@ def ab_power_x(a, b, x):
     # Multiply by a
     return a * exponential_result
 
-
 if __name__ == "__main__":
-    # Example usage of the ab_power_x function
     print(ab_power_x(2, 3, 4))     # 2 * 3^4 = 162
     print(ab_power_x(1, 5, 2))     # 1 * 5^2 = 25
     print(ab_power_x(0, 3, 4))     # 0 * 3^4 = 0
