@@ -1,5 +1,6 @@
 from functions.standard_deviation import standard_deviation
 from functions.arccos import arccos_taylor
+from functions.exponent import exponent
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -29,7 +30,7 @@ def process_calc_request(request : DataModel) -> dict:
         mean_absolute_deviation = lambda x : x,
         gamma_function = lambda x : x,
         arccos = arccos_taylor(),
-        power_function = lambda x : x,
+        power_function = exponent,
         log_function = lambda x : x,
         exponential_growth = lambda x : x,
         arithmetic_expression = lambda x : eval(x, {}, {}),
