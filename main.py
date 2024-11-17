@@ -29,9 +29,9 @@ def process_calc_request(request : DataModel) -> dict:
     
     func = dict(
         standard_deviation = standard_deviation,
-        mean_absolute_deviation = get_mad(),
+        mean_absolute_deviation = get_mad,
         gamma_function = lambda x : x,
-        arccos = arccos_taylor(),
+        arccos = arccos_taylor,
         power_function = exponent,
         log_function = lambda x : x,
         exponential_growth = ab_power_x,

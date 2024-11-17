@@ -36,7 +36,7 @@ def get_mad(my_list: list[float]) -> float:
         sum_std += temp
 
     mad_of_list = sum_std / len(my_list)
-    return "hey"
+    return mad_of_list
 
 
 # def mad_function(numbers: list) -> float:
