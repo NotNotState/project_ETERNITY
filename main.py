@@ -2,6 +2,7 @@ from functions.standard_deviation import standard_deviation
 from functions.arccos import arccos_taylor
 from functions.exponent import exponent
 from functions.ab_power_x import ab_power_x
+from functions.mean_absolute_deviation import get_mad
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -28,7 +29,7 @@ def process_calc_request(request : DataModel) -> dict:
     
     func = dict(
         standard_deviation = standard_deviation,
-        mean_absolute_deviation = lambda x : x,
+        mean_absolute_deviation = get_mad(),
         gamma_function = lambda x : x,
         arccos = arccos_taylor(),
         power_function = exponent,
