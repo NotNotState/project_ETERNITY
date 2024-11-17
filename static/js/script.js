@@ -1,49 +1,86 @@
-//Re-name for each function
 //Include general user-input validator
+import Validators from './mathOperators.js';
+
+document.getElementById("submitButton").addEventListener("click", submitCalculation);
+
+function validatorFactory(operation, userInput) {
+    let calcObj;
+    switch(operation) {
+        case "standard_deviation":
+        case "mean_absolute_deviation":
+            calcObj = new Validators.StatisticValidator(operation, userInput);
+            break;
+        case "gamma_function":
+        case "arccos":
+            calcObj = new Validators.SingleParamFloatValidator(operation, userInput);
+            break;
+        case "power_function":
+        case "log_function":
+            calcObj = new Validators.DoubleParamFloatValidator(operation, userInput);
+            break;
+        case "exponential_growth"://takes 3 args!
+            calcObj = new Validators.ThreeParamFloatValidator(operation, userInput);
+            break;
+        case "arithmetic_expression":
+            calcObj = new Validators.ArithmeticExpressionValidator(operation, userInput);
+            break;
+        default:
+            throw new Error(`Object Assignment Failed for "${operation}" with "${userInput}"`);
+    }
+
+    return calcObj;
+}
+
+function getCalculationPackage(calculationObject){
+    return {
+        data_operation : calculationObject.getOperation(),
+        data : calculationObject.getData()
+    }
+}
 
 async function submitCalculation() {
     const operation = document.getElementById("operation").value;
     const dataInput = document.getElementById("data").value;
-    
-    // Parse the comma-separated input into an array of numbers
-    //const data = dataInput.split(",").map(Number);
-    const data = dataInput
-        .split(",")
-        .map(item => item.trim()) // Trim extra whitespace
-        .filter(item => item !== "")
-        .map(Number)
-        .filter(value => !isNaN(value));          // Convert to number
 
-    // Make sure the data is a valid array of numbers
-    if ((data.some(isNaN)) || (data.length == 0)) {
-        document.getElementById("result").textContent = "Please enter valid numbers separated by commas.";
+    if (dataInput == "") {
+        document.getElementById("result").textContent = "Please enter some data.";
+        console.log(dataInput);
+        return;
+    }   
+
+    const calcObj = validatorFactory(operation, dataInput); //Raise Error if function not present
+
+    // console.log(calcObj.getData());
+    // console.log(typeof calcObj.getData());
+    // console.log(calcObj.getOperation());
+    // console.log(calcObj.isInputValid());
+
+    const url = "/calculate_call";
+    let calcPackage = {};
+
+    if (calcObj.isInputValid()){
+        calcPackage = getCalculationPackage(calcObj);
+    }else{
+        console.log("ERROR NOT VALID");
+        document.getElementById("result").textContent = "The data you entered was not in the right format!";
         return;
     }
 
-    // Send request to FastAPI based on the selected operation
-    let url = "";
-    let requestData = {};
-
-    if (operation === "standard_deviation") {
-        url = "/calculate_standard_deviation";
-        requestData = { data };
-    }
-
     try {
-        console.log(data);
         const response = await fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(requestData),
+            body: JSON.stringify(calcPackage),
         });
 
         // Parse response and display result
         const result = await response.json();
-        document.getElementById("result").textContent = result?.standard_deviation ?? "Error";
-        //document.getElementById("result").textContent = result.standard_deviation || console.log(data);
+        document.getElementById("result").textContent = result?.calculation_result ?? "A Backend Processing Error Occured";
     } catch (error) {
         document.getElementById("result").textContent = "An error occurred.";
     }
+
+
 }
