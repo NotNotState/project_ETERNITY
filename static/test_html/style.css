@@ -15,6 +15,22 @@
     display: flex;
     flex-direction: column;
 }
+.history div{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.history div.operation, .history div.answer{
+    margin: 7px;
+    padding: 2px;
+    border-radius: 7px;
+    border: 1px solid rgb(187, 221, 255);
+} 
+.history div.operation:hover, .history div.answer:hover{
+    cursor: pointer;
+    background-color: rgba(187, 221, 255, 0.282);
+} 
 .calculator{
     width: 100%;
     height: 100vh;

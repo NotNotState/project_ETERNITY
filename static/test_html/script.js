@@ -26,11 +26,17 @@ document.getElementById('equal').addEventListener('click', function(){
     var historyHTML = document.getElementById('history');
     var operationTXT = document.createTextNode(entry.operation);
     var answerTXT = document.createTextNode(entry.answer);
-    var div = document.createElement('div');
-    div.appendChild(operationTXT);
-    div.append(" = ");
-    div.appendChild(answerTXT);
-    historyHTML.appendChild(div);
+    var big_div = document.createElement('div')
+    var div_op = document.createElement('div');
+    div_op.classList.add("operation")
+    div_op.appendChild(operationTXT);
+    big_div.append(div_op)
+    big_div.append(" = ");
+    var div_ans = document.createElement('div');
+    div_ans.classList.add("answer")
+    div_ans.appendChild(answerTXT);
+    big_div.append(div_ans)
+    historyHTML.appendChild(big_div);
     
 })
 
