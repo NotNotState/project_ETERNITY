@@ -28,13 +28,15 @@ document.getElementById('equal').addEventListener('click', function(){
     var answerTXT = document.createTextNode(entry.answer);
     var big_div = document.createElement('div')
     var div_op = document.createElement('div');
-    div_op.classList.add("operation")
+    div_op.classList.add("history_value")
     div_op.appendChild(operationTXT);
+    div_op.onclick = function(){display.value = div_op.innerHTML}
     big_div.append(div_op)
     big_div.append(" = ");
     var div_ans = document.createElement('div');
-    div_ans.classList.add("answer")
+    div_ans.classList.add("history_value")
     div_ans.appendChild(answerTXT);
+    div_ans.onclick = function(){display.value = div_ans.innerHTML}
     big_div.append(div_ans)
     historyHTML.appendChild(big_div);
     
@@ -60,3 +62,11 @@ for (var i = 0;i < operator_buttons.length; i++){
         }
     });
 }
+
+var display = document .getElementById("display");
+display.addEventListener("keypress", function(event){
+    if(event.key == "Enter"){
+        document.getElementById('equal').click();
+    }
+})
+

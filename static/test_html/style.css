@@ -21,13 +21,13 @@
     justify-content: center;
     align-items: center;
 }
-.history div.operation, .history div.answer{
+.history div.history_value{
     margin: 7px;
     padding: 2px;
     border-radius: 7px;
     border: 1px solid rgb(187, 221, 255);
 } 
-.history div.operation:hover, .history div.answer:hover{
+.history div.history_value:hover{
     cursor: pointer;
     background-color: rgba(187, 221, 255, 0.282);
 } 

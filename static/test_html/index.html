@@ -12,8 +12,8 @@
         <div class="history" id="history">
             History
             <div>
-                <div class="operation">7-3</div>=
-                <div class="answer">4</div>
+                <div class="history_value">7-3</div>=
+                <div class="history_value">4</div>
             </div>
 
         </div>
@@ -21,23 +21,23 @@
             <form>
                 <div class="display">
                     <input type="text" name="previous" class="previous" id="previous">
-                    <input type="text" name="display" id="display">
+                    <input type="text" name="display" id="display" onblur="this.focus()" autofocus>
                 </div>
                 <div style="display: flex;">
                     <div>
                         <div>
                             <input type="button" value="Rad | Deg" class="rad operator">
-                            <input type="button" value="x^y" class="operator">
+                            <input type="button" value="x^y" class="operator" onclick="display.value += '^' ">
                         </div>
                         <div>
-                            <input type="button" value="sinh(x)" class="operator">
-                            <input type="button" value="log_b(x)" class="operator">
-                            <input type="button" value="std" class="operator">
+                            <input type="button" value="sinh(x)" class="operator" onclick="display.value += ' sinh(' ">
+                            <input type="button" value="log_b(x)" class="operator" onclick="display.value += ' log(' ">
+                            <input type="button" value="std" class="operator" onclick="display.value += ' std(' ">
                         </div>
                         <div>
                             <input type="button" value="ab^x" class="operator">
-                            <input type="button" value="arccos(x)" class="operator">
-                            <input type="button" value="m.a.d." class="operator">
+                            <input type="button" value="arccos(x)" class="operator" onclick="display.value += ' arccos(' ">
+                            <input type="button" value="m.a.d." class="operator" onclick="display.value += ' mad(' ">
                         </div>
                         <div>
                             <input type="button" value="Ans" class="operator">
