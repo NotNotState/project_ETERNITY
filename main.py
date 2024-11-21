@@ -3,6 +3,9 @@ from functions.arccos import arccos_taylor
 from functions.exponent import exponent
 from functions.ab_power_x import ab_power_x
 from functions.mean_absolute_deviation import get_mad
+from functions.fancy_input import calculate
+from functions.sinh import custom_sinh
+
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -36,7 +39,11 @@ def process_calc_request(request : DataModel) -> dict:
         log_function = lambda x : x,
         exponential_growth = ab_power_x,
         arithmetic_expression = lambda x : eval(x, {}, {}),
+        fancy_input = calculate,
+        sinh = custom_sinh
     ).get(request.data_operation, None)
+
+    res = func(request.data)
 
     try:
         res = func(request.data)
@@ -48,7 +55,3 @@ def process_calc_request(request : DataModel) -> dict:
 
 if __name__ == "__main__":
     root()
-
-    x = -1  # Example input in the range [-1, 1]
-    result = arccos_taylor(x)
-    print("arccos(", x, ") =", result)

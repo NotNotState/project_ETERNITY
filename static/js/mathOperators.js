@@ -171,7 +171,7 @@ class ArithmeticExpressionValidator extends OperatorInterface {
     //checks that list is not empty or contains null values
     isInputValid(){
         let regex = /^[0-9+\-*/()\s]*$/;
-        return regex.test(this.data);
+        return this.operation === "fancy_input" ? true : regex.test(this.data);
     }
 
 }
