@@ -16,27 +16,27 @@ def get_sum_std(my_list: list[float], avg: float) -> float:
         sum_std += temp
     return sum_std
 
-# def get_mad(my_list: list[float]) -> float:
-#     avg = get_avg(my_list)
-#     sum_std = get_sum_std(my_list, avg)
-#     mad_of_list = sum_std / len(my_list)
-#     return mad_of_list
-
 def get_mad(my_list: list[float]) -> float:
-    sum_of_list = 0
-    for num in my_list:
-        sum_of_list += num
-    avg = sum_of_list / len(my_list)
-
-    std = []
-    sum_std = 0
-    for num in my_list:
-        temp = abs(avg - num)
-        std.append(temp)
-        sum_std += temp
-
+    avg = get_avg(my_list)
+    sum_std = get_sum_std(my_list, avg)
     mad_of_list = sum_std / len(my_list)
     return mad_of_list
+
+# def get_mad(my_list: list[float]) -> float:
+#     sum_of_list = 0
+#     for num in my_list:
+#         sum_of_list += num
+#     avg = sum_of_list / len(my_list)
+
+#     std = []
+#     sum_std = 0
+#     for num in my_list:
+#         temp = abs(avg - num)
+#         std.append(temp)
+#         sum_std += temp
+
+#     mad_of_list = sum_std / len(my_list)
+#     return mad_of_list
 
 
 # def mad_function(numbers: list) -> float:
