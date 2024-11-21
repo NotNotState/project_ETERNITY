@@ -1,11 +1,11 @@
 import numpy as np
-from functions.helper_functions import exponential
+# from functions.helper_functions import exponential
 
 """
 Calculates sinh(x) using the exponential definition: sinh(x) = (e^x - e^(-x)) / 2
 """
 
-def sinh(x: float) -> float:
+def custom_sinh(x: float) -> float:
     """
     Calculate sinh(x) using the exponential definition.
     """
@@ -33,5 +33,5 @@ if __name__ == "__main__":
     # Test values for sinh(x)
     test_values = [0, 0.5, 1, 2, 5]
     for val in test_values:
-        print(f"sinh({val}) = {sinh(val)}")
+        print(f"sinh({val}) = {custom_sinh(val)}")
         print(f"np.sinh({val}) = {np.sinh(val)}")  # Compare with numpy's sinh

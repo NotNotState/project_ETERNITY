@@ -12,13 +12,13 @@
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body onload="displaySelectedOperation()">
-    <a href="/static/test_html/index.html">test_html</a>
     <div class="container">
         <h1>Eternity Calculator</h1>
-
+        <p>Link to test GUI: <a href="/static/test_html/index.html">test_html</a></p>
         <div class="calculator">
             <label for="operation">Select Operation:</label>
             <select id="operation" onchange="displaySelectedOperation()">
+                <option value="fancy_input">Generic Mathematical Input</option>
                 <option value="arithmetic_expression">Arithmetic Expression</option>
                 <option value="standard_deviation">Standard Deviation</option>
                 <option value="arccos">arccos Function</option>
@@ -26,7 +26,7 @@
                 <option value="log_function">Logarithmic Function</option>
                 <option value="mean_absolute_deviation">Mean Absolute Deviation (MAD)</option>
                 <option value="power_function">Power Function</option>
-                <option value="gamma_function">Gamma Function</option>
+                <option value="sinh">sinh</option>
             </select>
           
             <label for="data">Enter Data (comma-separated):</label>
@@ -63,14 +63,17 @@
                 case "power_function":
                     latexString = "\\( x^{y} \\)";
                     break;
-                case "gamma_function":
-                    latexString = "\\( \\Gamma(x) \\)";
+                case "sinh":
+                    latexString = "\\( \\sinh \\)";
                     break;
                 case "mean_absolute_deviation":
                     latexString = "\\( MAD \\)";
                     break;
                 case "arithmetic_expression":
                     latexString = "\\( +,-,\\times, \\div \\)";
+                    break;
+                case "fancy_input":
+                    latexString = "\\( \\phi \\)";
                     break;
                 default:
                     latexString = operation;

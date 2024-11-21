@@ -10,8 +10,8 @@ function validatorFactory(operation, userInput) {
         case "mean_absolute_deviation":
             calcObj = new Validators.StatisticValidator(operation, userInput);
             break;
-        case "gamma_function":
         case "arccos":
+        case "sinh":
             calcObj = new Validators.SingleParamFloatValidator(operation, userInput);
             break;
         case "power_function":
@@ -22,6 +22,7 @@ function validatorFactory(operation, userInput) {
             calcObj = new Validators.ThreeParamFloatValidator(operation, userInput);
             break;
         case "arithmetic_expression":
+        case "fancy_input":
             calcObj = new Validators.ArithmeticExpressionValidator(operation, userInput);
             break;
         default:
