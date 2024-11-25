@@ -3,7 +3,7 @@ from functions.arccos import arccos_taylor
 from functions.exponent import exponent
 from functions.ab_power_x import ab_power_x
 from functions.mean_absolute_deviation import get_mad
-from functions.fancy_input import calculate
+from functions.fancy_input import calc_obj
 from functions.sinh import custom_sinh
 
 from fastapi import FastAPI, HTTPException
@@ -29,7 +29,7 @@ def root():
 @app.post("/calculate_call")
 def process_calc_request(request : DataModel) -> dict:
     res = 0
-    
+    c = calc_obj()
     func = dict(
         standard_deviation = standard_deviation,
         mean_absolute_deviation = get_mad,
@@ -39,7 +39,7 @@ def process_calc_request(request : DataModel) -> dict:
         log_function = lambda x : x,
         exponential_growth = ab_power_x,
         arithmetic_expression = lambda x : eval(x, {}, {}),
-        fancy_input = calculate,
+        fancy_input = c.calculate,
         sinh = custom_sinh
     ).get(request.data_operation, None)
 
