@@ -87,7 +87,7 @@ def list_function(operation, jump, function):
         x = numbers[0]
         if len(numbers) == 2:
             base = float(numbers[1])
-        answr_package.answer = math.log(x, base)
+        answr_package.answer = logarithm(base, x)
         print(f"log{numbers} = {answr_package.answer}")
     return answr_package
 
