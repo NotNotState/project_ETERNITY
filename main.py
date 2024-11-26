@@ -14,7 +14,6 @@ from pydantic import BaseModel
 # Type enforcement on front end requests
 class DataModel(BaseModel):
     data : list[float] | str | float = None # This replaces that above
-    data_operation: str | None = None
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="./static"), name="static")
@@ -24,29 +23,16 @@ app.mount("/static", StaticFiles(directory="./static"), name="static")
 def root():
     #return FileResponse(os.path.join(os.path.dirname(__file__), "../static/index.html")) # Run this if you get fucky behaviour
     #return FileResponse(os.path.join("static", "index.html"))
-    return FileResponse("static/index.html")
+    return FileResponse("static/test_html/index.html")
 
 @app.post("/calculate_call")
 def process_calc_request(request : DataModel) -> dict:
     res = 0
     c = calc_obj()
-    func = dict(
-        standard_deviation = standard_deviation,
-        mean_absolute_deviation = get_mad,
-        gamma_function = lambda x : x,
-        arccos = arccos_taylor,
-        power_function = exponent,
-        log_function = lambda x : x,
-        exponential_growth = ab_power_x,
-        arithmetic_expression = lambda x : eval(x, {}, {}),
-        fancy_input = c.calculate,
-        sinh = custom_sinh
-    ).get(request.data_operation, None)
-
-    res = func(request.data)
+    res = c.calculate(request.data)
 
     try:
-        res = func(request.data)
+        res = c.calculate(request.data)
     except:
         raise HTTPException(status_code=400, detail="data_operation not recognized")
     

@@ -12,6 +12,7 @@ if(History == null){
     };
 }
 document.getElementById('equal').addEventListener('click', function(){
+    submitCalculation()
     var entry = {
         operation: document.getElementById('previous').value.toString().slice(0,-1),
         answer: document.getElementById('display').value
@@ -70,3 +71,29 @@ display.addEventListener("keypress", function(event){
     }
 })
 
+async function submitCalculation() {
+    const dataInput = document.getElementById("display").value;
+    const url = "/calculate_call";
+    let calcPackage = {
+        data : dataInput
+    }
+
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(calcPackage),
+        });
+        console.log("yay")
+
+        // Parse response and display result
+        const result = await response.json();
+        document.getElementById("display").value = result?.calculation_result ?? "A Backend Processing Error Occured";
+        console.log("ya2y")
+    } catch (error) {
+        document.getElementById("display").textContent = "An error occurred.";
+        console.log("ya5y")
+    }
+}

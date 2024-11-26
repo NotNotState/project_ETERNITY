@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/static/test_html/style.css">
     <title>eternity calc</title>
 </head>
 <body>
     
     <div class="container">
         <div class="history" id="history">
-            History
+            <div>History</div>
             <div>
             </div>
 
@@ -71,7 +71,7 @@
                         <div>
                             <input type="button" value="." onclick="display.value += '.' ">
                             <input type="button" value="0" onclick="display.value += ' 0' " class="number">
-                            <input type="button" value="=" onclick="previous.value = display.value + ' ='; display.value = eval(display.value)" class="equal" id="equal">
+                            <input type="button" value="=" onclick="previous.value = display.value + ' ='" class="equal" id="equal">
                             <input type="button" value="+" onclick="display.value += ' +' " class="operator">
                         </div>
                     </div>
@@ -81,7 +81,7 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="/static/test_html/script.js"></script>
 
 </body>
 </html>
