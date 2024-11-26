@@ -10,7 +10,7 @@
     
     <div class="container">
         <div class="history" id="history">
-            History
+            <div class="history_title">History</div>
             <div>
             </div>
 
@@ -25,7 +25,7 @@
                     <div>
                         <div>
                             <input type="button" value="Rad | Deg" class="rad operator">
-                            <input type="button" value="x^y" class="operator" onclick="display.value += '^' ">
+                            <input type="button" value="x^y" class="operator" onclick="display.value += 'exp(' ">
                         </div>
                         <div>
                             <input type="button" value="sinh(x)" class="operator" onclick="display.value += ' sinh(' ">
@@ -33,7 +33,7 @@
                             <input type="button" value="std" class="operator" onclick="display.value += ' std(' ">
                         </div>
                         <div>
-                            <input type="button" value="ab^x" class="operator">
+                            <input type="button" value="ab^x" class="operator" onclick="display.value += ' abx(' ">
                             <input type="button" value="arccos(x)" class="operator" onclick="display.value += ' arccos(' ">
                             <input type="button" value="m.a.d." class="operator" onclick="display.value += ' mad(' ">
                         </div>
