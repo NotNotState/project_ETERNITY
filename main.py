@@ -1,10 +1,4 @@
-from functions.standard_deviation import standard_deviation
-from functions.arccos import arccos_taylor
-from functions.exponent import exponent
-from functions.ab_power_x import ab_power_x
-from functions.mean_absolute_deviation import get_mad
 from functions.fancy_input import calc_obj
-from functions.sinh import custom_sinh
 
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
