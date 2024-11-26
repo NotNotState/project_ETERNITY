@@ -14,7 +14,10 @@
     font-weight: bold;
     display: flex;
     flex-direction: column;
+    padding-top: 10px;
+    font-size: large;
 }
+
 .history div{
     width: 80%;
     display: flex;
@@ -84,4 +87,3 @@ form .display input.previous{
 form input.rad{
     width: 170px;
 }
-
