@@ -1,6 +1,5 @@
-# import os
+import os
 from itertools import islice
-import math
 from functions.sinh import custom_sinh
 from functions.arccos import arccos_taylor
 from functions.logarithm import logarithm
@@ -9,14 +8,13 @@ from functions.ab_power_x import ab_power_x
 from functions.mean_absolute_deviation import get_mad
 from functions.standard_deviation import standard_deviation
 
-
 class Answer_Package:
     def __init__(self, jump):
         self.answer = ''
         self.jump = jump
 
 def single_input(operation, jump, sinh = True):
-    print(f"entered sinh:{sinh} with {operation}")
+    print(f"entered sinh: with {operation}")
     answr_package = Answer_Package(jump)
     to_calculate = ''
     for i in operation:
@@ -48,31 +46,50 @@ def list_function(operation, jump, function):
         if i==" ":
             pass
         else:     
-            if i != ")" or (i == ")" and len(brackets) > 1):  
-                print(f"\ncurrent: {i}")
+            if i != ")" or (i == ")" and len(brackets) > 1): 
+                print(f"\noperation: {operation}") 
+                print(f"current: {i}")
                 print(f"numbers: {numbers}")
-                if i != ',' and i != "s" and i!= "a":
+                if i != ',':
                     current_number += i
                     if i == "(":
                         brackets.append(i)
                     if i == ")":
                         brackets.pop()
                 # since we check commas, special checks for possible functions that also use commas
-                elif i == "s" or i == "a":
-                    pass
-                elif i == "e":
-                    current_number += str((c.get_answr_package(operation, "exp", 4, op_iter, i)))
-                elif i == "l":
-                    current_number += str((c.get_answr_package(operation, "log", 4, op_iter, i)))
-                elif i == "m":
-                    current_number += str((c.get_answr_package(operation, "mad", 4, op_iter, i)))
-                elif i == "b":
-                    current_number += str((c.get_answr_package(operation, "abx", 3, op_iter, i)))
-                elif i == "t":
-                    current_number += str((c.get_answr_package(operation, "std", 3, op_iter, i)))
-                # since 's' is passed, must manually give the option of sin being found, even if it doesn't have commas
-                elif i == "i":
-                    current_number += str((c.get_answr_package(operation, "sinh", 4, op_iter, i)))
+                    if i == "s" or i == "a":
+                        pass
+                    elif i == "e":
+                        current_number = current_number[:-1]
+                        answr_pkg_2 = c.get_answr_package(operation, "exp", 4, op_iter, i)
+                        current_number += str(answr_pkg_2.answer)
+                        answr_package.jump += answr_pkg_2.jump + 1
+                    elif i == "l":
+                        current_number = current_number[:-1]
+                        answr_pkg_2 = c.get_answr_package(operation, "log", 4, op_iter, i)
+                        current_number += str(answr_pkg_2.answer)
+                        answr_package.jump += answr_pkg_2.jump + 1
+                    elif i == "m":
+                        current_number = current_number[:-1]
+                        answr_pkg_2 = c.get_answr_package(operation, "mad", 4, op_iter, i)
+                        current_number += str(answr_pkg_2.answer)
+                        answr_package.jump += answr_pkg_2.jump + 1
+                    elif i == "b":
+                        current_number = current_number[:-2]
+                        answr_pkg_2 = c.get_answr_package(operation, "abx", 3, op_iter, i)
+                        current_number += str(answr_pkg_2.answer)
+                        answr_package.jump += answr_pkg_2.jump + 1
+                    elif i == "t":
+                        current_number = current_number[:-2]
+                        answr_pkg_2 = c.get_answr_package(operation, "std", 3, op_iter, i)
+                        current_number += str(answr_package.answer)
+                        answr_package.jump += answr_pkg_2.jump + 1
+                    # since 's' is passed, must manually give the option of sin being found, even if it doesn't have commas
+                    elif i == "i":
+                        current_number = current_number[:-2]
+                        answr_pkg_2 = c.get_answr_package(operation, "sinh", 4, op_iter, i)
+                        current_number += str(answr_pkg_2.answer)
+                        answr_package.jump += answr_pkg_2.jump + 1
                 else:
                     final_number = c.calculate(current_number)
                     numbers.append(float(final_number))
@@ -157,7 +174,7 @@ class calc_obj:
             answr_package = std(operation[operation.index(i) + jump:])
         # here is where the jumping happens
         next(islice(op_iter, answr_package.jump, answr_package.jump + 1), '')
-        return answr_package.answer
+        return answr_package
 
 
     # return priority of operator
@@ -186,26 +203,27 @@ class calc_obj:
             if i == " ":
                 pass
             else:
-                print(f"\ncurrent: {i}")
+                print(f"\noperation: {operation}")
+                print(f"current: {i}")
                 print(f"operators: {self.operators}")
                 print(f"numbers: {self.numbers}")
                 # both sin and std have s, so we'll ignore it for now, same for a in abx and arccos
                 if i == "s" or i =="a":
                     pass 
                 elif i == "b":
-                    self.numbers.append(self.get_answr_package(operation, "abx", 3, op_iter, i))
+                    self.numbers.append(self.get_answr_package(operation, "abx", 3, op_iter, i).answer)
                 elif i == "e":
-                    self.numbers.append(self.get_answr_package(operation, "exp", 4, op_iter, i))
+                    self.numbers.append(self.get_answr_package(operation, "exp", 4, op_iter, i).answer)
                 elif i == "l":
-                    self.numbers.append(self.get_answr_package(operation, "log", 4, op_iter, i))
+                    self.numbers.append(self.get_answr_package(operation, "log", 4, op_iter, i).answer)
                 elif i == "m":
-                    self.numbers.append(self.get_answr_package(operation, "mad", 4, op_iter, i))
+                    self.numbers.append(self.get_answr_package(operation, "mad", 4, op_iter, i).answer)
                 elif i =="r":
-                    self.numbers.append(self.get_answr_package(operation, "arccos", 6, op_iter, i))
+                    self.numbers.append(self.get_answr_package(operation, "arccos", 6, op_iter, i).answer)
                 elif i == "i":
-                    self.numbers.append(self.get_answr_package(operation, "sinh", 4, op_iter, i))
+                    self.numbers.append(self.get_answr_package(operation, "sinh", 4, op_iter, i).answer)
                 elif i == "t":
-                    self.numbers.append(self.get_answr_package(operation, "std", 3, op_iter, i))
+                    self.numbers.append(self.get_answr_package(operation, "std", 3, op_iter, i).answer)
                 elif i not in self.characters:
                     current_number += i
                 else:
@@ -251,3 +269,13 @@ class calc_obj:
 #             print("================================")
 #             c.calculate(line.strip())
 #             count+=1
+
+#             # sinh(7) = 548.3161232732465
+#             # sinh(56) = 1.045829748006498e+24
+#             # std(11, 9, 10, 34) = 10.416333328
+#             # log(4, 2) = 2
+#             # exp(2,-3/4) = 0.594603
+#             # abx(1.5, 3, -2) = 0.166666...
+#             # arccos(-0.55) = 2.15316056466364
+#             # mad(5, 12, 1, 0, 4, 22, 15, 3, 9) = 5.876543209876543
+
