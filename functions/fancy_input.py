@@ -8,13 +8,16 @@ from functions.ab_power_x import ab_power_x
 from functions.mean_absolute_deviation import get_mad
 from functions.standard_deviation import standard_deviation
 
+debugger_print = False
+
 class Answer_Package:
     def __init__(self, jump):
         self.answer = ''
         self.jump = jump
 
 def single_input(operation, jump, sinh = True):
-    print(f"entered sinh: with {operation}")
+    if debugger_print:
+        print(f"entered sinh: with {operation}")
     answr_package = Answer_Package(jump)
     to_calculate = ''
     for i in operation:
@@ -24,17 +27,19 @@ def single_input(operation, jump, sinh = True):
         else:
             break
     c = calc_obj()
-    if sinh:
-        
+    if sinh: 
         answr_package.answer = custom_sinh(float(c.calculate(to_calculate)))
-        print(f"sinh({to_calculate} = {answr_package.answer}")
+        if debugger_print:
+            print(f"sinh({to_calculate} = {answr_package.answer}")
     else:
         answr_package.answer = arccos_taylor(float(c.calculate(to_calculate)))
-        print(f"arccos({to_calculate} = {answr_package.answer}")
+        if debugger_print:
+            print(f"arccos({to_calculate} = {answr_package.answer}")
     return answr_package
 
 def list_function(operation, jump, function):
-    print(f"entered {function} with {operation}")
+    if debugger_print:
+        print(f"entered {function} with {operation}")
     numbers = []
     brackets = ["("]
     current_number = ''
@@ -47,9 +52,10 @@ def list_function(operation, jump, function):
             pass
         else:     
             if i != ")" or (i == ")" and len(brackets) > 1): 
-                print(f"\noperation: {operation}") 
-                print(f"current: {i}")
-                print(f"numbers: {numbers}")
+                if debugger_print:
+                    print(f"\noperation: {operation}") 
+                    print(f"current: {i}")
+                    print(f"numbers: {numbers}")
                 if i != ',':
                     current_number += i
                     if i == "(":
@@ -100,28 +106,33 @@ def list_function(operation, jump, function):
     numbers.append(float(final_number))
     if function == "std":
         answr_package.answer = standard_deviation(numbers)
-        print(f"std{numbers} = {answr_package.answer}")
+        if debugger_print:
+            print(f"std{numbers} = {answr_package.answer}")
     elif function == "mad":
         answr_package.answer = get_mad(numbers)
-        print(f"mad{numbers} = {answr_package.answer}")
+        if debugger_print:
+            print(f"mad{numbers} = {answr_package.answer}")
     elif function == "log":
         base = 10
         x = numbers[0]
         if len(numbers) == 2:
             base = float(numbers[1])
         answr_package.answer = logarithm(base, x)
-        print(f"log{numbers} = {answr_package.answer}")
+        if debugger_print:
+            print(f"log{numbers} = {answr_package.answer}")
     elif function == "exp": 
         base = numbers[0]
         exp = numbers[1]
         answr_package.answer = exponent(base, exp)
-        print(f"exp{numbers} = {answr_package.answer}")
+        if debugger_print:
+            print(f"exp{numbers} = {answr_package.answer}")
     else:  # abx
         a = numbers[0]
         b = numbers[1]
         x = numbers[2]
         answr_package.answer = ab_power_x(a,b,x)
-        print(f"abx{numbers} = {answr_package.answer}")
+        if debugger_print:
+            print(f"abx{numbers} = {answr_package.answer}")
     return answr_package
 
 
@@ -193,7 +204,8 @@ class calc_obj:
             '^':pow(a,b), '+':a+b, '-':a-b, '*':a*b, '/':a/b
         }.get(operator, -1)
         self.numbers.append(result)
-        print(f"executing: {a} {operator} {b} = {result}")
+        if debugger_print:
+            print(f"executing: {a} {operator} {b} = {result}")
 
     def calculate(self, operation):
         # iter object. helps with jumping iteration
@@ -203,10 +215,11 @@ class calc_obj:
             if i == " ":
                 pass
             else:
-                print(f"\noperation: {operation}")
-                print(f"current: {i}")
-                print(f"operators: {self.operators}")
-                print(f"numbers: {self.numbers}")
+                if debugger_print:
+                    print(f"\noperation: {operation}")
+                    print(f"current: {i}")
+                    print(f"operators: {self.operators}")
+                    print(f"numbers: {self.numbers}")
                 # both sin and std have s, so we'll ignore it for now, same for a in abx and arccos
                 if i == "s" or i =="a":
                     pass 
@@ -252,7 +265,8 @@ class calc_obj:
         while len(self.operators) != 0:
             self.execute()
         self.final_answer = self.numbers.pop()
-        print(f"\n{operation} = {self.final_answer}")
+        if debugger_print:
+            print(f"\n{operation} = {self.final_answer}")
         return self.final_answer
 
 # ===================================================================
